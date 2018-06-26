@@ -10,15 +10,10 @@ Vue.use(Router)
 export default new Router({
   routes: [
     {
-      path: '/table',
+      path: '/',
       name: 'Table',
       component: Table,
       children: [
-        {
-          path: ':league',
-          name: 'league',
-          component: Auth
-        },
         {
           path: ':league/:round',
           name: 'league',

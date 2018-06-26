@@ -2,10 +2,10 @@
     <div class="table__wrapper">
         <div class="control__wrapper">
             <div class="control__league">
-                <router-link :to="'/table/k/' + round" class="control__button"><p>КП</p></router-link>
-                <router-link :to="'/table/v/' + round" class="control__button"><p>ВШФ</p></router-link>
-                <router-link :to="'/table/b/' + round" class="control__button"><p>БПФ</p></router-link>
-                <router-link :to="'/table/e/' + round" class="control__button"><p>EN</p></router-link>
+                <router-link :to="'/k/' + round" class="control__button"><p>КП</p></router-link>
+                <router-link :to="'/v/' + round" class="control__button"><p>ВШФ</p></router-link>
+                <router-link :to="'/b/' + round" class="control__button"><p>БПФ</p></router-link>
+                <router-link :to="'/e/' + round" class="control__button"><p>EN</p></router-link>
                 <div class="active-bubble"></div>
             </div>
             <div class="control__round">
@@ -23,13 +23,26 @@
 
 <script>
 export default {
-  name: 'auth',
+  name: 'table',
   computed: {
     league: function () {
-      return this.$route.path.slice(0, -1)
+      if (this.$route.params.league) {
+        return this.$route.path.slice(0, -1)
+      } else {
+        return 'k'
+      }
     },
     round: function () {
-      return this.$route.path.slice(-1)
+      if (this.$route.params.round) {
+        return this.$route.path.slice(-1)
+      } else {
+        return '1'
+      }
+    }
+  },
+  created: function () {
+    if (!this.$route.params.league || !this.$route.params.round) {
+      this.$router.push('/k/1')
     }
   }
 }
