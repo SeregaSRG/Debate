@@ -1,0 +1,184 @@
+$cubic_bezier: cubic-bezier(.7,0,.3,1);
+/*$accent-color: #218a8b;
+//$accent-color: #14DFCB;
+$secondary-color: #6e7a89;
+$text-color: #F8F8FA;
+$error-color: #80262c;
+$back-color: #1D2733;
+$background-color: #151E27;
+*/
+$accent-color: #2f9aac;
+$text-color: #dfdfe9;
+// $secondary-color: #6b6a6f;
+$secondary-color: #999999;
+$background-color: #13131f;
+$background_module-color: #232531;
+$background_module__light-color: #272935;
+$sidebar-color: #1d2029;
+$error-color: #80262c;
+
+input {
+    transition: all .4s;
+    margin-bottom: 20px;
+    height: 30px;
+    width: 100%;
+    background-color: transparent;
+    border: 0;
+    border-bottom: 1px solid #3E4E62;
+    outline: none;
+    font-size: 16px;
+    padding-left: 5px;
+    color: $text-color;
+    &::-webkit-input-placeholder{
+        color: $secondary-color;
+    }
+
+    &:focus {
+        border-bottom: 1px solid $accent-color;
+    }
+}
+
+textarea {
+    transition: all .4s;
+    margin-bottom: 20px;
+    width: 100%;
+    background-color: transparent;
+    border: 0;
+    border-bottom: 1px solid #3E4E62;
+    outline: none;
+    font-size: 16px;
+    padding-left: 5px;
+    color: $text-color;
+    &::-webkit-input-placeholder{
+        color: $secondary-color;
+    }
+
+    &:focus {
+        border-bottom: 1px solid $accent-color;
+    }
+}
+
+.incorrect-input {
+    border-bottom: 1px solid $error-color!important;
+}
+
+.next-button {
+    transition: all .2s;
+    width: 100%;
+    height: 48px;
+    position: absolute;
+    bottom: 0;
+    border: 1px solid $accent-color;
+    display: flex;
+    border-radius: 12px;
+    color: $accent-color;
+
+    p {
+        margin: auto;
+    }
+}
+
+@mixin rotate($degrees) {
+    -moz-transform:rotate($degrees);
+    -webkit-transform:rotate($degrees);
+    -o-transform:rotate($degrees);
+    -ms-transform:rotate($degrees);
+}
+
+@mixin waterfall($count, $transitionStep, $transitionName) {
+    @for $i from 1 through $count {
+        :nth-child(#{$i}).#{$transitionName}-enter-active {
+            $transitionDelay: $transitionStep * $i;
+            transition-delay: #{$transitionDelay}s;
+        }
+    }
+}
+
+.noselect {
+    -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Safari */
+    -khtml-user-select: none; /* Konqueror HTML */
+    -moz-user-select: none; /* Firefox */
+    -ms-user-select: none; /* Internet Explorer/Edge */
+    user-select: none; /* Non-prefixed version, currently
+                                  supported by Chrome and Opera */
+}
+
+.closeButton {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    color: $secondary-color;
+    font-size: 12px;
+}
+
+.shadow-block {
+  box-shadow: 0px 0px 30px 0px rgba(0, 0, 0, 0.2);
+}
+
+a {
+    text-decoration: none;
+}
+
+.error-text {
+    margin: 0 auto;
+    color: $error-color;
+    text-align: center;
+}
+
+.fade-enter-active, .fade-leave-active {
+    transition: opacity .2s;
+}
+.fade-enter, .fade-leave-to {
+    opacity: 0;
+}
+
+.select-tab {
+    margin: 20px auto;
+    height: 40px;
+    width: 100%;
+    max-width: 310px;
+    background-color: transparent;
+    border-radius: 20px;
+    display: flex;
+    cursor: pointer;
+    user-select: none;
+
+    &:active, &:focus, &:hover {
+        outline: none;
+        outline: 0;
+        outline-offset: 0;
+    }
+
+    &::-moz-focus-inner {
+        border: 0;
+    }
+
+    .select-tab__button {
+        width: 50%;
+        display: flex;
+        border: 1px solid $secondary-color;
+        transition: .1s;
+        p {
+            margin: auto;
+            color: $secondary-color
+        }
+    }
+
+    .select-tab__left {
+        border-radius: 20px 0 0 20px;
+        border-right-color: transparent;
+    }
+
+    .select-tab__right {
+        border-radius: 0 20px 20px 0;
+        border-left-color: transparent;
+    }
+
+    .select-tab__active, .router-link-active {
+        border: 1px solid $accent-color;
+        p {
+            color: $accent-color !important;
+        }
+    }
+}
