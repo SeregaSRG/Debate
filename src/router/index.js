@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import Auth from '@/components/auth'
-import Table from '@/components/table'
+import Tab from '@/components/tab'
 
 // import m from './middleware.js'
 
@@ -11,13 +11,12 @@ export default new Router({
   routes: [
     {
       path: '/',
-      name: 'Table',
-      component: Table,
+      name: 'Tab',
+      component: Tab,
       children: [
         {
           path: ':league/:round',
-          name: 'league',
-          component: Auth
+          name: 'league'
         }
       ]
     },

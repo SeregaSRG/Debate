@@ -1,5 +1,5 @@
 <template>
-    <div class="table__wrapper">
+    <div class="tab__wrapper">
         <div class="control__wrapper">
             <div class="control__league">
                 <router-link :to="'/k/' + round" class="control__button"><p>КП</p></router-link>
@@ -13,17 +13,27 @@
                 <router-link :to="league + '2'" class="control__button"><p>2</p></router-link>
                 <router-link :to="league + '3'" class="control__button"><p>3</p></router-link>
                 <router-link :to="league + '4'" class="control__button"><p>4</p></router-link>
-                <router-link :to="league + '5'" class="control__button"><p>5 </p></router-link>
+                <router-link :to="league + '5'" class="control__button"><p>5</p></router-link>
                 <div class="active-bubble"></div>
             </div>
         </div>
-        <router-view></router-view>
+        <tab-table></tab-table>
     </div>
 </template>
 
 <script>
 export default {
-  name: 'table',
+  name: 'tab',
+  components: {
+    'tabTable': () => import('./tabTable.vue')
+  },
+  watch: {
+    '$route' (to, from) {
+      console.log(to)
+    }
+  },
+  methods: {
+  },
   computed: {
     league: function () {
       if (this.$route.params.league) {
@@ -52,7 +62,7 @@ export default {
 
     @import '../main.scss';
 
-    .table__wrapper {
+    .tab__wrapper {
         width: 100%;
         height: 100%;
         position: absolute;
