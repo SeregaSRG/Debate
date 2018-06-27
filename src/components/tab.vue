@@ -9,27 +9,137 @@
                 <div class="active-bubble"></div>
             </div>
             <div class="control__round">
-                <router-link :to="league + '1'" class="control__button"><p>1</p></router-link>
-                <router-link :to="league + '2'" class="control__button"><p>2</p></router-link>
-                <router-link :to="league + '3'" class="control__button"><p>3</p></router-link>
-                <router-link :to="league + '4'" class="control__button"><p>4</p></router-link>
-                <router-link :to="league + '5'" class="control__button"><p>5</p></router-link>
+                <router-link :to="'/'+league+'/1'" class="control__button"><p>1</p></router-link>
+                <router-link :to="'/'+league+'/2'" class="control__button"><p>2</p></router-link>
+                <router-link :to="'/'+league+'/3'" class="control__button"><p>3</p></router-link>
+                <router-link :to="'/'+league+'/4'" class="control__button"><p>4</p></router-link>
+                <router-link :to="'/'+league+'/5'" class="control__button"><p>5</p></router-link>
                 <div class="active-bubble"></div>
             </div>
         </div>
-        <tab-table></tab-table>
+        <tab-table
+                :tables="tab[league][round]"
+        ></tab-table>
     </div>
 </template>
 
 <script>
 export default {
   name: 'tab',
+  data () {
+    return {
+      table: {},
+      tab: {
+        k: {
+          1: [
+            {
+              meta: {
+                room: 'Рум 1 "Название"',
+                judge: 'Имя Судьи'
+              },
+              teams: {
+                1: {
+                  name: 'Название команды',
+                  club: 'Клуб',
+                  command: {
+                    first: '1Имя Фамилия',
+                    second: '2Имя Фамилия',
+                    third: '3Имя Фамилия'
+                  }
+                },
+                2: {
+                  name: 'Название команды',
+                  club: 'Клуб',
+                  command: {
+                    first: '1Имя Фамилия',
+                    second: '2Имя Фамилия',
+                    third: '3Имя Фамилия'}
+                }
+              }
+            },
+            {
+              meta: {
+                room: 'Рум 2 "Название"',
+                judge: 'Имя Судьи 2'
+              },
+              teams: {
+                1: {
+                  name: 'Название команды',
+                  club: 'Клуб',
+                  command: {
+                    first: '1Имя Фамилия',
+                    second: '2Имя Фамилия',
+                    third: '3Имя Фамилия'
+                  }
+                },
+                2: {
+                  name: 'Название команды',
+                  club: 'Клуб',
+                  command: {
+                    first: '1Имя Фамилия',
+                    second: '2Имя Фамилия',
+                    third: '3Имя Фамилия'
+                  }
+                }
+              }
+            }
+          ],
+          2: [
+            {
+              meta: {
+                room: 'Рум 1 "Название"',
+                judge: 'Имя Судьи 3'
+              },
+              teams: {
+                1: {
+                  name: 'Название команды',
+                  club: 'Клуб',
+                  command: {
+                    first: '1Имя Фамилия',
+                    second: '2Имя Фамилия',
+                    third: '3Имя Фамилия'
+                  }
+                },
+                2: {
+                  name: 'Название команды',
+                  club: 'Клуб',
+                  command: {
+                    first: '1Имя Фамилия',
+                    second: '2Имя Фамилия',
+                    third: '3Имя Фамилия'
+                  }
+                },
+                3: {
+                  name: 'Название команды',
+                  club: 'Клуб',
+                  command: {
+                    first: '1Имя Фамилия',
+                    second: '2Имя Фамилия',
+                    third: '3Имя Фамилия'
+                  }
+                },
+                4: {
+                  name: 'Название команды',
+                  club: 'Клуб',
+                  command: {
+                    first: '1Имя Фамилия',
+                    second: '2Имя Фамилия',
+                    third: '3Имя Фамилия'
+                  }
+                }
+              }
+            }
+          ]
+        }
+      }
+    }
+  },
   components: {
     'tabTable': () => import('./tabTable.vue')
   },
   watch: {
     '$route' (to, from) {
-      console.log(to)
+      this.table = this.tab[this.league][this.round]
     }
   },
   methods: {
@@ -37,7 +147,7 @@ export default {
   computed: {
     league: function () {
       if (this.$route.params.league) {
-        return this.$route.path.slice(0, -1)
+        return this.$route.params.league
       } else {
         return 'k'
       }
@@ -66,6 +176,7 @@ export default {
         width: 100%;
         height: 100%;
         position: absolute;
+        overflow-y: scroll;
     }
 
     .control__wrapper {

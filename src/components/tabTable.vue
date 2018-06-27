@@ -1,138 +1,39 @@
 <template>
     <div class="tab-table__wrapper">
-        <!--
-        <div class="table"
-        >
-            <div class="table__row"
+        <!-- <transition-group name="fade" mode="out-in"> -->
+            <div class="table"
+                 v-for="(table, key) in tables"
+                 :key="key"
             >
-                <div class="table__cell">
-                    <h1></h1>
-                    <h3
-                    ></h3>
+                <div class="meta">
+                    <h1>{{ table.meta.room }}</h1>
+                    <h1>{{ table.meta.judge }}</h1>
+                </div>
+                <div class="table__row">
+                    <div class="table__cell"
+                         v-for="(team, key) in table.teams"
+                         :key="key"
+                    >
+                        <h1>{{ team.name }}</h1>
+                        <h5>{{ team.club }}</h5>
+                        <p
+                                v-for="(command, key) in team.command"
+                                :key="key"
+                        >{{ command }}</p>
+                    </div>
                 </div>
             </div>
-        </div>
-        -->
-        <div class="table">
-            <div class="meta">
-                <h1>Рум 1 "Название"</h1>
-                <h1>Ян Соколов</h1>
-            </div>
-            <div class="table__row">
-                <div class="table__cell">
-                    <h1>Название команды</h1>
-                    <h5>Название клуба</h5>
-                    <p>Екатерина Васильева</p>
-                    <p>Екатерина Васильева</p>
-                    <p>Екатерина Васильева</p>
-                </div>
-                <div class="table__cell">
-                    <h1>Название команды</h1>
-                    <h5>Название клуба</h5>
-                    <p>Екатерина Васильева</p>
-                    <p>Екатерина Васильева</p>
-                    <p>Екатерина Васильева</p>
-                </div>
-            </div>
-            <div class="table__row">
-                <div class="table__cell">
-                    <h1>Название команды</h1>
-                    <h5>Название клуба</h5>
-                    <p>Екатерина Васильева</p>
-                    <p>Екатерина Васильева</p>
-                    <p>Екатерина Васильева</p>
-                </div>
-                <div class="table__cell">
-                    <h1>Название команды</h1>
-                    <h5>Название клуба</h5>
-                    <p>Екатерина Васильева</p>
-                    <p>Екатерина Васильева</p>
-                    <p>Екатерина Васильева</p>
-                </div>
-            </div>
-        </div>
-        <div class="table">
-            <div class="meta">
-                <h1>Рум 1 "Название"</h1>
-                <h1>Ян Соколов</h1>
-            </div>
-            <div class="table__row">
-                <div class="table__cell">
-                    <h1>Название команды</h1>
-                    <h5>Название клуба</h5>
-                    <p>Екатерина Васильева</p>
-                    <p>Екатерина Васильева</p>
-                    <p>Екатерина Васильева</p>
-                </div>
-                <div class="table__cell">
-                    <h1>Название команды</h1>
-                    <h5>Название клуба</h5>
-                    <p>Екатерина Васильева</p>
-                    <p>Екатерина Васильева</p>
-                    <p>Екатерина Васильева</p>
-                </div>
-            </div>
-            <div class="table__row">
-                <div class="table__cell">
-                    <h1>Название команды</h1>
-                    <h5>Название клуба</h5>
-                    <p>Екатерина Васильева</p>
-                    <p>Екатерина Васильева</p>
-                    <p>Екатерина Васильева</p>
-                </div>
-                <div class="table__cell">
-                    <h1>Название команды</h1>
-                    <h5>Название клуба</h5>
-                    <p>Екатерина Васильева</p>
-                    <p>Екатерина Васильева</p>
-                    <p>Екатерина Васильева</p>
-                </div>
-            </div>
-        </div>
-        <div class="table">
-            <div class="meta">
-                <h1>Рум 1 "Название"</h1>
-                <h1>Ян Соколов</h1>
-            </div>
-            <div class="table__row">
-                <div class="table__cell">
-                    <h1>Название команды</h1>
-                    <h5>Название клуба</h5>
-                    <p>Екатерина Васильева</p>
-                    <p>Екатерина Васильева</p>
-                    <p>Екатерина Васильева</p>
-                </div>
-                <div class="table__cell">
-                    <h1>Название команды</h1>
-                    <h5>Название клуба</h5>
-                    <p>Екатерина Васильева</p>
-                    <p>Екатерина Васильева</p>
-                    <p>Екатерина Васильева</p>
-                </div>
-            </div>
-            <div class="table__row">
-                <div class="table__cell">
-                    <h1>Название команды</h1>
-                    <h5>Название клуба</h5>
-                    <p>Екатерина Васильева</p>
-                    <p>Екатерина Васильева</p>
-                    <p>Екатерина Васильева</p>
-                </div>
-                <div class="table__cell">
-                    <h1>Название команды</h1>
-                    <h5>Название клуба</h5>
-                    <p>Екатерина Васильева</p>
-                    <p>Екатерина Васильева</p>
-                    <p>Екатерина Васильева</p>
-                </div>
-            </div>
-        </div>
+        <!-- </transition-group> -->
     </div>
 </template>
 
 <script>
 export default {
-  name: 'tab-table'
+  name: 'tab-table',
+  props: ['tables'],
+  created: function () {
+    console.log()
+  }
 }
 </script>
 
@@ -141,11 +42,9 @@ export default {
     @import '../main.scss';
 
     .tab-table__wrapper {
-        width: 100%;
+        width: 98%;
         max-width: 400px;
-        height: 100%;
         margin: 0 auto;
-        overflow-y: scroll;
 
         .table {
             margin: 20px auto;
@@ -170,10 +69,11 @@ export default {
                 width: 100%;
                 display: flex;
                 flex-direction: row;
-                padding-bottom: 10px;
+                flex-wrap: wrap;
 
                 .table__cell {
                     width: 50%;
+                    padding-bottom: 12px;
 
                     h1 {
                         font-size: 20px;
