@@ -4,14 +4,16 @@ import api from '../../services/api'
 const state = {
   token: null,
   checkoutStatus: null,
-  auth: false
+  auth: false,
+  name: ''
 }
 
 // getters
 const getters = {
   getToken: state => state.token,
   checkLogin: state => state.auth,
-  getStatus: state => state.checkoutStatus
+  getStatus: state => state.checkoutStatus,
+  getName: state => state.name
 }
 
 // actions
@@ -21,12 +23,12 @@ const actions = {
       commit(types.AUTH_REQUESTING)
       api.$auth.login(credentials)
         .then((response) => {
-          if (response.data.Success) {
+          if (response.data.status === 'done') {
             commit(types.AUTH_SUCCESS, response.data)
             resolve()
           } else {
             commit(types.AUTH_FAIL)
-            reject(response.data.Description)
+            reject(response.data.errorcode)
           }
         })
         .catch((data) => {
@@ -34,7 +36,8 @@ const actions = {
           reject(data)
         })
     })
-  },
+  }
+  /*
   register ({ commit, state }, credentials) {
     return new Promise((resolve, reject) => {
       commit(types.AUTH_REQUESTING)
@@ -73,6 +76,7 @@ const actions = {
         })
     })
   }
+  */
 }
 
 // mutations
@@ -84,8 +88,9 @@ const mutations = {
     state.checkoutStatus = null
   },
   [types.AUTH_SUCCESS] (state, data) {
-    state.token = data.Description
+    state.token = data.token
     state.auth = true
+    state.name = data.login
     state.checkoutStatus = null
   },
   [types.AUTH_LOGOUT] (state) {

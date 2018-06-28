@@ -2,8 +2,9 @@ import Network from '../network.js'
 
 export default {
   login (creds) {
-    return Network.post('api/Login', creds)
-  },
+    return Network.get('user.login', creds)
+  }
+  /* ,
   register (creds) {
     return Network.post('api/Register', creds)
   },
@@ -13,4 +14,5 @@ export default {
   refresh () {
 
   }
+  */
 }

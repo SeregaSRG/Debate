@@ -2,16 +2,38 @@
     <div class="auth__wrapper">
         <div class="decoration"></div>
         <div class="auth__card shadow-block">
-            <input class="auth__login" type="text" placeholder="Фамилия">
-            <input class="auth__password" type="tel" placeholder="Пароль">
-            <div class="auth__button"><p>ВОЙТИ</p></div>
+            <input class="auth__login" type="text" placeholder="Фамилия" v-model="objForLogin.login">
+            <input class="auth__password" type="tel" placeholder="Пароль" v-model="objForLogin.password">
+            <div class="auth__button" @click="login"><p>ВОЙТИ</p></div>
         </div>
     </div>
 </template>
 
 <script>
 export default {
-  name: 'auth'
+  name: 'auth',
+  data () {
+    return {
+      objForLogin: {
+        login: '',
+        password: ''
+      }
+    }
+  },
+  methods: {
+    login () {
+      this.$store.dispatch('auth/login', this.objForLogin)
+        .then(() => {
+          if (this.$store.getters['auth/checkLogin']) {
+            this.$router.push('/')
+          }
+        })
+        .catch((data) => {
+          console.log(data)
+          alert(data)
+        })
+    }
+  }
 }
 </script>
 
