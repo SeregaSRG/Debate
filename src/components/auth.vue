@@ -4,7 +4,10 @@
         <div class="auth__card shadow-block">
             <input class="auth__login" type="text" placeholder="Фамилия" v-model="objForLogin.login">
             <input class="auth__password" type="tel" placeholder="Пароль" v-model="objForLogin.password">
-            <div class="auth__button" @click="login"><p>ВОЙТИ</p></div>
+            <div class="auth__button" @click="login">
+                <p v-if="!status">ВОЙТИ</p>
+                <p v-else>Выполняется запрос..</p>
+            </div>
         </div>
     </div>
 </template>
@@ -32,6 +35,11 @@ export default {
           console.log(data)
           alert(data)
         })
+    }
+  },
+  computed: {
+    status: function () {
+      return this.$store.getters['auth/getStatus']
     }
   }
 }
