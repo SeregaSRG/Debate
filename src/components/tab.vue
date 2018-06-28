@@ -30,7 +30,7 @@ export default {
   data () {
     return {
       table: {},
-      tab: {
+      tab1: {
         k: {
           1: [
             {
@@ -141,7 +141,6 @@ export default {
   },
   watch: {
     '$route' (to, from) {
-      // this.table = this.tab[this.league][this.round]
     }
   },
   methods: {
@@ -160,12 +159,22 @@ export default {
       } else {
         return '1'
       }
+    },
+    tab: function () {
+      return this.$store.getters['tab/getTab']
     }
   },
   created: function () {
-    if (!this.$route.params.league || !this.$route.params.round) {
-      this.$router.push('/k/1')
-    }
+    this.$store.dispatch('tab/getTab', {})
+      .then(() => {
+        if (!this.$route.params.league || !this.$route.params.round) {
+          this.$router.push('/k/1')
+        }
+      })
+      .catch((data) => {
+        console.log(data)
+        alert(data)
+      })
   }
 }
 </script>

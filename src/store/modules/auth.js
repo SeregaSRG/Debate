@@ -3,7 +3,7 @@ import api from '../../services/api'
 
 const state = {
   token: null,
-  checkoutStatus: null,
+  checkoutStatus: false,
   auth: false,
   name: ''
 }
@@ -24,7 +24,7 @@ const actions = {
       api.$auth.login(credentials)
         .then((response) => {
           if (response.data.status === 'done') {
-            commit(types.AUTH_SUCCESS, response.data)
+            commit(types.AUTH_SUCCESS, response.data.data)
             resolve()
           } else {
             commit(types.AUTH_FAIL)
@@ -85,18 +85,18 @@ const mutations = {
     state.checkoutStatus = 'requesting'
   },
   [types.AUTH_FAIL] (state) {
-    state.checkoutStatus = null
+    state.checkoutStatus = false
   },
   [types.AUTH_SUCCESS] (state, data) {
     state.token = data.token
     state.auth = true
     state.name = data.login
-    state.checkoutStatus = null
+    state.checkoutStatus = false
   },
   [types.AUTH_LOGOUT] (state) {
     state.token = null
     state.auth = false
-    state.checkoutStatus = null
+    state.checkoutStatus = false
   }
 }
 

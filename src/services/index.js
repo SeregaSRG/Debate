@@ -5,9 +5,7 @@
 
 import Network from './network.js'
 import Auth from './api/auth.js'
-import Account from './api/account.js'
-import Feedback from './api/feedback.js'
-import Message from './api/message.js'
+import Tab from './api/tab.js'
 import Api from './api'
 
 function plugin (Vue) {
@@ -16,9 +14,7 @@ function plugin (Vue) {
   }
   Vue.prototype.$network = Network
   Vue.prototype.$auth = Auth
-  Vue.prototype.$account = Account
-  Vue.prototype.$feedback = Feedback
-  Vue.prototype.$message = Message
+  Vue.prototype.$tab = Tab
   Vue.prototype.$api = Api
 }
 

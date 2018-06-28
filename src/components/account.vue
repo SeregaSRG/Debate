@@ -12,8 +12,14 @@ export default {
   name: 'account',
   data () {
     return {
-      name: 'Имя фамилия',
-      isLogin: false
+    }
+  },
+  computed: {
+    isLogin: function () {
+      return this.$store.getters['auth/checkLogin']
+    },
+    name: function () {
+      return this.$store.getters['auth/getName']
     }
   }
 }
