@@ -1,6 +1,7 @@
 <template>
     <div class="tab__wrapper">
         <div class="control__wrapper">
+            <account></account>
             <div class="control__league">
                 <router-link :to="'/k/' + round" class="control__button"><p>КП</p></router-link>
                 <router-link :to="'/v/' + round" class="control__button"><p>ВШФ</p></router-link>
@@ -135,11 +136,12 @@ export default {
     }
   },
   components: {
-    'tabTable': () => import('./tabTable.vue')
+    'tabTable': () => import('./tabTable.vue'),
+    'account': () => import('./account.vue')
   },
   watch: {
     '$route' (to, from) {
-      this.table = this.tab[this.league][this.round]
+      // this.table = this.tab[this.league][this.round]
     }
   },
   methods: {
@@ -181,7 +183,7 @@ export default {
 
     .control__wrapper {
         width: 100%;
-        height: 150px;
+        height: 170px;
         margin: 0 auto;
         display: flex;
         justify-content: space-evenly;

@@ -50,7 +50,7 @@ export default {
             margin: 20px auto;
             display: flex;
             flex-direction: column;
-            padding: 5px;
+            padding: 10px;
             border: 1px black solid;
             border-radius: 5px;
 
@@ -73,7 +73,7 @@ export default {
 
                 .table__cell {
                     width: 50%;
-                    padding-bottom: 12px;
+                    padding-bottom: 10px;
 
                     h1 {
                         font-size: 20px;
@@ -91,6 +91,7 @@ export default {
                         > * {
                             text-align: right;
                         }
+                        border-left: 1px black solid;
                     }
                 }
             }
