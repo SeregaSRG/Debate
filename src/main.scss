@@ -1,20 +1,10 @@
 $cubic_bezier: cubic-bezier(.7,0,.3,1);
-/*$accent-color: #218a8b;
-//$accent-color: #14DFCB;
-$secondary-color: #6e7a89;
-$text-color: #F8F8FA;
-$error-color: #80262c;
-$back-color: #1D2733;
-$background-color: #151E27;
-*/
+
+
+$background-color: #ffffff;
 $accent-color: #2f9aac;
-$text-color: #dfdfe9;
-// $secondary-color: #6b6a6f;
 $secondary-color: #999999;
-$background-color: #13131f;
-$background_module-color: #232531;
-$background_module__light-color: #272935;
-$sidebar-color: #1d2029;
+$text-color: #000000;
 $error-color: #80262c;
 
 input {
@@ -23,56 +13,29 @@ input {
     height: 30px;
     width: 100%;
     background-color: transparent;
-    border: 0;
-    border-bottom: 1px solid #3E4E62;
+    border: 1px solid $secondary-color;
     outline: none;
     font-size: 16px;
-    padding-left: 5px;
+    padding: 20px;
     color: $text-color;
+    border-radius: 10px;
     &::-webkit-input-placeholder{
         color: $secondary-color;
     }
-
     &:focus {
-        border-bottom: 1px solid $accent-color;
+        border: 1px solid $accent-color;
     }
 }
 
-textarea {
-    transition: all .4s;
-    margin-bottom: 20px;
-    width: 100%;
-    background-color: transparent;
-    border: 0;
-    border-bottom: 1px solid #3E4E62;
-    outline: none;
-    font-size: 16px;
-    padding-left: 5px;
-    color: $text-color;
-    &::-webkit-input-placeholder{
-        color: $secondary-color;
-    }
-
-    &:focus {
-        border-bottom: 1px solid $accent-color;
-    }
-}
-
-.incorrect-input {
-    border-bottom: 1px solid $error-color!important;
-}
-
-.next-button {
+.oval-button {
     transition: all .2s;
     width: 100%;
     height: 48px;
-    position: absolute;
-    bottom: 0;
     border: 1px solid $accent-color;
     display: flex;
     border-radius: 12px;
     color: $accent-color;
-
+    cursor: pointer;
     p {
         margin: auto;
     }
@@ -95,13 +58,12 @@ textarea {
 }
 
 .noselect {
-    -webkit-touch-callout: none; /* iOS Safari */
-    -webkit-user-select: none; /* Safari */
-    -khtml-user-select: none; /* Konqueror HTML */
-    -moz-user-select: none; /* Firefox */
-    -ms-user-select: none; /* Internet Explorer/Edge */
-    user-select: none; /* Non-prefixed version, currently
-                                  supported by Chrome and Opera */
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
 }
 
 .closeButton {
@@ -120,14 +82,8 @@ a {
     text-decoration: none;
 }
 
-.error-text {
-    margin: 0 auto;
-    color: $error-color;
-    text-align: center;
-}
-
 .fade-enter-active, .fade-leave-active {
-    transition: opacity .2s;
+    transition: opacity .5s;
 }
 .fade-enter, .fade-leave-to {
     opacity: 0;
