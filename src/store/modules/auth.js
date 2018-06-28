@@ -5,7 +5,7 @@ const state = {
   token: null,
   checkoutStatus: false,
   auth: false,
-  name: ''
+  name: null
 }
 
 // getters
@@ -36,7 +36,7 @@ const actions = {
           reject(data)
         })
     })
-  }
+  },
   /*
   register ({ commit, state }, credentials) {
     return new Promise((resolve, reject) => {
@@ -57,26 +57,13 @@ const actions = {
         })
     })
   },
+  */
   logout ({ commit, state }) {
     return new Promise((resolve, reject) => {
-      commit(types.AUTH_REQUESTING)
-      api.$auth.logout({})
-        .then((response) => {
-          if (response.data.Success) {
-            commit(types.AUTH_LOGOUT)
-            resolve()
-          } else {
-            commit(types.AUTH_FAIL)
-            reject(response.data.Description)
-          }
-        })
-        .catch((data) => {
-          commit(types.AUTH_FAIL)
-          reject(data)
-        })
+      commit(types.AUTH_LOGOUT)
+      resolve()
     })
   }
-  */
 }
 
 // mutations
@@ -96,6 +83,7 @@ const mutations = {
   [types.AUTH_LOGOUT] (state) {
     state.token = null
     state.auth = false
+    state.name = null
     state.checkoutStatus = false
   }
 }

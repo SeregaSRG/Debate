@@ -1,8 +1,14 @@
 <template>
     <div class="account__wrapper">
+        <div class="account__button" v-if="isLogin && (name==='Админ')">
+            <router-link :to="'/admin'">УПРАВЛЕНИЕ</router-link>
+        </div>
+        <div class="account__button" v-if="isLogin && !(name==='Админ')">
+            <router-link :to="'/judging'">СУДЕЙСТВО</router-link>
+        </div>
         <div class="account__button">
             <router-link :to="'/auth'" v-if="!isLogin">ВОЙТИ</router-link>
-            <p v-if="isLogin">{{ name }}</p>
+            <p v-if="isLogin" @click="logout">{{ name }}</p>
         </div>
     </div>
 </template>
@@ -12,6 +18,16 @@ export default {
   name: 'account',
   data () {
     return {
+    }
+  },
+  methods: {
+    logout: function () {
+      this.$store.dispatch('auth/logout')
+        .then(() => {
+          if (!this.$store.getters['auth/checkLogin']) {
+            this.$router.push('/auth')
+          }
+        })
     }
   },
   computed: {
@@ -29,8 +45,8 @@ export default {
 .account__wrapper {
     width: 300px;
     display: flex;
-    flex-direction: column;
-    align-items: flex-end;
+    flex-direction: row;
+    justify-content: space-between;
 
     .account__button {
         cursor: pointer;
