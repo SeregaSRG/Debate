@@ -46,7 +46,7 @@ const actions = {
             commit(types.CHECKLOGIN_SUCCESS)
             resolve()
           } else {
-            commit(types.AUTH_FAIL)
+            commit(types.CHECKLOGIN_FAIL)
             reject(response.data.errorcode)
           }
         })

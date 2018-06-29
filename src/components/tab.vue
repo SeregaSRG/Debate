@@ -29,110 +29,7 @@ export default {
   name: 'tab',
   data () {
     return {
-      table: {},
-      tab1: {
-        k: {
-          1: [
-            {
-              meta: {
-                room: 'Рум 1 "Название"',
-                judge: 'Имя Судьи'
-              },
-              teams: {
-                1: {
-                  name: 'Название команды',
-                  club: 'Клуб',
-                  command: {
-                    first: '1Имя Фамилия',
-                    second: '2Имя Фамилия',
-                    third: '3Имя Фамилия'
-                  }
-                },
-                2: {
-                  name: 'Название команды',
-                  club: 'Клуб',
-                  command: {
-                    first: '1Имя Фамилия',
-                    second: '2Имя Фамилия',
-                    third: '3Имя Фамилия'}
-                }
-              }
-            },
-            {
-              meta: {
-                room: 'Рум 2 "Название"',
-                judge: 'Имя Судьи 2'
-              },
-              teams: {
-                1: {
-                  name: 'Название команды',
-                  club: 'Клуб',
-                  command: {
-                    first: '1Имя Фамилия',
-                    second: '2Имя Фамилия',
-                    third: '3Имя Фамилия'
-                  }
-                },
-                2: {
-                  name: 'Название команды',
-                  club: 'Клуб',
-                  command: {
-                    first: '1Имя Фамилия',
-                    second: '2Имя Фамилия',
-                    third: '3Имя Фамилия'
-                  }
-                }
-              }
-            }
-          ],
-          2: [
-            {
-              meta: {
-                room: 'Рум 1 "Название"',
-                judge: 'Имя Судьи 3'
-              },
-              teams: {
-                1: {
-                  name: 'Название команды',
-                  club: 'Клуб',
-                  command: {
-                    first: '1Имя Фамилия',
-                    second: '2Имя Фамилия',
-                    third: '3Имя Фамилия'
-                  }
-                },
-                2: {
-                  name: 'Название команды',
-                  club: 'Клуб',
-                  command: {
-                    first: '1Имя Фамилия',
-                    second: '2Имя Фамилия',
-                    third: '3Имя Фамилия'
-                  }
-                },
-                3: {
-                  name: 'Название команды',
-                  club: 'Клуб',
-                  command: {
-                    first: '1Имя Фамилия',
-                    second: '2Имя Фамилия',
-                    third: '3Имя Фамилия'
-                  }
-                },
-                4: {
-                  name: 'Название команды',
-                  club: 'Клуб',
-                  command: {
-                    first: '1Имя Фамилия',
-                    second: '2Имя Фамилия',
-                    third: '3Имя Фамилия'
-                  }
-                }
-              }
-            }
-          ]
-        }
-      }
+      table: {}
     }
   },
   components: {
@@ -166,19 +63,20 @@ export default {
   },
   created: function () {
     this.$store.dispatch('auth/checkLogin', {})
+      .then(() => console.log('check done'))
+      .catch((data) => {
+        console.error(data)
+        alert(data)
+      })
+    this.$store.dispatch('tab/getTab', {})
       .then(() => {
-        this.$store.dispatch('tab/getTab', {})
-          .then(() => {
-            if (!this.$route.params.league || !this.$route.params.round) {
-              this.$router.push('/k/1')
-            }
-          })
-          .catch((data) => {
-            console.log(data)
-            alert(data)
-          })
+        if (!this.$route.params.league || !this.$route.params.round) {
+          this.$router.push('/k/1')
+        }
       })
       .catch((data) => {
+        console.log(data)
+        alert(data)
       })
   }
 }
