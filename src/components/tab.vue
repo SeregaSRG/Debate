@@ -66,7 +66,6 @@ export default {
       .then(() => console.log('check done'))
       .catch((data) => {
         console.error(data)
-        alert(data)
       })
     this.$store.dispatch('tab/getTab', {})
       .then(() => {
