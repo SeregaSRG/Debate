@@ -165,15 +165,20 @@ export default {
     }
   },
   created: function () {
-    this.$store.dispatch('tab/getTab', {})
+    this.$store.dispatch('auth/checkLogin', {})
       .then(() => {
-        if (!this.$route.params.league || !this.$route.params.round) {
-          this.$router.push('/k/1')
-        }
+        this.$store.dispatch('tab/getTab', {})
+          .then(() => {
+            if (!this.$route.params.league || !this.$route.params.round) {
+              this.$router.push('/k/1')
+            }
+          })
+          .catch((data) => {
+            console.log(data)
+            alert(data)
+          })
       })
       .catch((data) => {
-        console.log(data)
-        alert(data)
       })
   }
 }

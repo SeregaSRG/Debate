@@ -8,7 +8,23 @@ const state = {
 
 // getters
 const getters = {
-  getTab: state => state.tab
+  getTab: state => state.tab,
+  getTabByJudge: state => name => {
+    const tab = state.tab
+    let arr = []
+    console.log(tab)
+    for (let league in tab) {
+      for (let round in tab[league]) {
+        for (let room in tab[league][round]) {
+          if (tab[league][round][room]['meta']['judge'] === name) {
+            arr.push(tab[league][round][room])
+          }
+        }
+      }
+    }
+    console.log(arr)
+    return arr
+  }
 }
 
 // actions
