@@ -1,8 +1,11 @@
 <template>
     <div>
-        <div class="teams__wrapper">
+        <div class="teams__wrapper"
+             v-for="(league, key) in teams"
+             :key="key"
+        >
             <div class="card shadow-block"
-                 v-for="(team, key) in teams"
+                 v-for="(team, key) in league"
                  :key="key"
             >
                 <input placeholder="Название команды.." :value="team[0].team" readonly/>
@@ -35,7 +38,7 @@ export default {
     @import '../main.scss';
     .teams__wrapper {
         width: 90%;
-        height: 100%;
+        height: auto;
         padding: 5px;
         margin: 0 auto;
         display: flex;

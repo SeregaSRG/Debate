@@ -15,15 +15,43 @@ const state = {
 
 // getters
 const getters = {
-  getSpeakers: state => state.speakers,
+  getSpeakers: state => state.speakers.sort((a, b) => {
+    if (a.league > b.league) {
+      return 1
+    }
+    if (a.league < b.league) {
+      return -1
+    }
+    return 0
+  }),
   getTeams: state => {
-    let result = {}
+    let result = {
+      'k': {},
+      'v': {},
+      'b': {},
+      'e': {}
+    }
     state.speakers.forEach(function (item, i, arr) {
-      if (result[item.team] === undefined) {
-        result[item.team] = []
-        result[item.team].push(item)
+      let league = ''
+      switch (item.league) {
+        case 'КП':
+          league = 'k'
+          break
+        case 'ВШФ':
+          league = 'v'
+          break
+        case 'БПФ':
+          league = 'b'
+          break
+        case 'EN':
+          league = 'e'
+          break
+      }
+      if (result[league][item.team] === undefined) {
+        result[league][item.team] = []
+        result[league][item.team].push(item)
       } else {
-        result[item.team].push(item)
+        result[league][item.team].push(item)
       }
     })
     return result
