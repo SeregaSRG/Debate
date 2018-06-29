@@ -1,13 +1,13 @@
 import Auth from './auth.js'
 import Tab from './tab.js'
-import Feedback from './feedback.js'
+import Speakers from './speakers.js'
 import Message from './message.js'
 
 let Api = {
   $auth: Auth,
   $tab: Tab,
-  $feedback: Feedback,
-  $message: Message
+  $message: Message,
+  $speakers: Speakers
 }
 
 export default Api

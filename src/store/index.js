@@ -5,6 +5,7 @@ import * as getters from './getters'
 import auth from './modules/auth'
 import cordova from './modules/cordova'
 import tab from './modules/tab'
+import speakers from './modules/speakers'
 import createPersistedState from 'vuex-persistedstate'
 
 Vue.use(Vuex)
@@ -15,7 +16,8 @@ export default new Vuex.Store({
   modules: {
     auth,
     cordova,
-    tab
+    tab,
+    speakers
   },
   plugins: [createPersistedState()]
 })

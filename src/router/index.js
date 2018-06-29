@@ -3,13 +3,48 @@ import Router from 'vue-router'
 import Auth from '@/components/auth'
 import Tab from '@/components/tab'
 import Judging from '@/components/judging'
+import Admin from '@/components/admin'
+import Speakers from '@/components/speakers'
+import Teams from '@/components/teams'
 
-// import m from './middleware.js'
+import m from './middleware.js'
 
 Vue.use(Router)
 
 export default new Router({
   routes: [
+    {
+      path: '/admin',
+      name: 'Admin',
+      beforeEnter: m.auth,
+      component: Admin,
+      children: [
+        {
+          path: 'speakers',
+          name: 'Speakers',
+          beforeEnter: m.auth,
+          component: Speakers
+        },
+        {
+          path: 'teams',
+          name: 'Teams',
+          beforeEnter: m.auth,
+          component: Teams
+        },
+        {
+          path: 'judges',
+          name: 'Speakers',
+          beforeEnter: m.auth,
+          component: Speakers
+        },
+        {
+          path: 'tab',
+          name: 'Speakers',
+          beforeEnter: m.auth,
+          component: Speakers
+        }
+      ]
+    },
     {
       path: '/',
       name: 'Tab',
@@ -29,6 +64,7 @@ export default new Router({
     {
       path: '/judging',
       name: 'Judging',
+      beforeEnter: m.auth,
       component: Judging
     }
   ]

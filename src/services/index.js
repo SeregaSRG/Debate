@@ -6,6 +6,7 @@
 import Network from './network.js'
 import Auth from './api/auth.js'
 import Tab from './api/tab.js'
+import Speakers from './api/speakers.js'
 import Api from './api'
 
 function plugin (Vue) {
@@ -15,6 +16,7 @@ function plugin (Vue) {
   Vue.prototype.$network = Network
   Vue.prototype.$auth = Auth
   Vue.prototype.$tab = Tab
+  Vue.prototype.$speakers = Speakers
   Vue.prototype.$api = Api
 }
 
