@@ -37,6 +37,25 @@ const actions = {
         })
     })
   },
+  checkLogin ({ commit, state }, credentials) {
+    return new Promise((resolve, reject) => {
+      commit(types.AUTH_REQUESTING)
+      api.$auth.checkLogin(credentials)
+        .then((response) => {
+          if (response.data.status === 'done') {
+            commit(types.CHECKLOGIN_SUCCESS)
+            resolve()
+          } else {
+            commit(types.AUTH_FAIL)
+            reject(response.data.errorcode)
+          }
+        })
+        .catch((data) => {
+          commit(types.AUTH_FAIL)
+          reject(data)
+        })
+    })
+  },
   /*
   register ({ commit, state }, credentials) {
     return new Promise((resolve, reject) => {
@@ -78,6 +97,16 @@ const mutations = {
     state.token = data.token
     state.auth = true
     state.name = data.login
+    state.checkoutStatus = false
+  },
+  [types.CHECKLOGIN_FAIL] (state) {
+    state.checkoutStatus = false
+    state.token = null
+    state.auth = false
+    state.name = null
+  },
+  [types.CHECKLOGIN_SUCCESS] (state) {
+    state.auth = true
     state.checkoutStatus = false
   },
   [types.AUTH_LOGOUT] (state) {

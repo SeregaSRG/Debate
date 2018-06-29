@@ -3,6 +3,9 @@ import Network from '../network.js'
 export default {
   login (creds) {
     return Network.get('user.login', creds)
+  },
+  checkLogin (creds) {
+    return Network.get('user.checkLogin', creds)
   }
   /* ,
   register (creds) {
