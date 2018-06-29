@@ -5,7 +5,7 @@
                 <router-link to="/admin/speakers" class="control__button"><p>Спикеры</p></router-link>
                 <router-link to="/admin/teams" class="control__button"><p>Команды</p></router-link>
                 <router-link to="/admin/judges" class="control__button"><p>Судьи</p></router-link>
-                <router-link to="/admin/tab" class="control__button"><p>ТЭБ</p></router-link>
+                <router-link to="/admin/tabs" class="control__button"><p>ТЭБ</p></router-link>
                 <div class="active-bubble"></div>
             </div>
         </div>
@@ -26,6 +26,12 @@ export default {
 
 <style lang="scss" scoped>
     @import '../main.scss';
+
+    .admin__wrapper {
+        width: 100%;
+        height: 100%;
+        overflow-y: scroll;
+    }
 
     .control__wrapper {
         width: 100%;

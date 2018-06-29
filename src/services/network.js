@@ -3,8 +3,7 @@ import store from '../store'
 
 const HTTP = axios.create({
   baseURL: 'http://d-core.microfox.ru/api/',
-  // headers: {'Content-Type': 'application/x-www-form-urlencoded'}
-  headers: {'Content-Type': 'application/json'}
+  headers: {'Content-Type': 'application/x-www-form-urlencoded'}
 })
 
 export default {

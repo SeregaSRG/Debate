@@ -10,7 +10,8 @@ const state = {
       club: 'Клуб',
       league: 'Лига'
     }
-  ]
+  ],
+  judges: []
 }
 
 // getters
@@ -46,6 +47,9 @@ const getters = {
         case 'EN':
           league = 'e'
           break
+        default:
+          league = 'e'
+          break
       }
       if (result[league][item.team] === undefined) {
         result[league][item.team] = []
@@ -55,20 +59,32 @@ const getters = {
       }
     })
     return result
+  },
+  getJudges: state => state.judges,
+  getClubs: state => {
+    let result = {}
+    console.log('state.speakers', state.speakers)
+    state.speakers.forEach(function (item, i, arr) {
+      if (result[item.club] === undefined) {
+        result[item.club] = 0
+        result[item.club] += 1
+      } else {
+        result[item.club] += 1
+      }
+    })
+    return result
   }
 }
 
 // actions
 const actions = {
   getSpeakers ({ commit, state }, credentials = {}) {
-    state.speakers = credentials.speakers
-    /*
     return new Promise((resolve, reject) => {
       commit(types.SPEAKERS_REQUESTING)
       api.$speakers.getSpeakers(credentials)
         .then((response) => {
           if (response.data.status === 'done') {
-            commit(types.SPEAKERS_SUCCESS, response.data.data)
+            commit('SPEAKERS_GET_SUCCESS', response.data.data)
             resolve()
           } else {
             commit(types.SPEAKERS_FAIL)
@@ -80,16 +96,53 @@ const actions = {
           reject(data)
         })
     })
-      */
   },
-  saveSpeakers ({ commit, state }, credentials = {}) {
+  saveSpeakers ({ commit, state }, credentials) {
     return new Promise((resolve, reject) => {
       commit(types.SPEAKERS_REQUESTING)
-      credentials.Page = state.currentPage
-      api.$speakers.getSpeakers(credentials)
+      console.log('saveSpeakers', credentials)
+      api.$speakers.saveSpeakers(credentials)
         .then((response) => {
           if (response.data.status === 'done') {
-            commit(types.SPEAKERS_SUCCESS, response.data.data)
+            commit('SPEAKERS_SAVE_SUCCESS', response.data.data)
+            resolve()
+          } else {
+            commit(types.SPEAKERS_FAIL)
+            reject(response.data.errorcode)
+          }
+        })
+        .catch((data) => {
+          commit(types.SPEAKERS_FAIL)
+          reject(data)
+        })
+    })
+  },
+  getJudges ({ commit, state }, credentials = {}) {
+    return new Promise((resolve, reject) => {
+      commit(types.SPEAKERS_REQUESTING)
+      api.$speakers.getJudges(credentials)
+        .then((response) => {
+          if (response.data.status === 'done') {
+            commit('JUDGES_GET_SUCCESS', response.data.data)
+            resolve()
+          } else {
+            commit(types.SPEAKERS_FAIL)
+            reject(response.data.errorcode)
+          }
+        })
+        .catch((data) => {
+          commit(types.SPEAKERS_FAIL)
+          reject(data)
+        })
+    })
+  },
+  saveJudges ({ commit, state }, credentials) {
+    return new Promise((resolve, reject) => {
+      commit(types.SPEAKERS_REQUESTING)
+      api.$speakers.saveJudges(credentials)
+        .then((response) => {
+          if (response.data.status === 'done') {
+            commit('JUDGES_SAVE_SUCCESS', response.data.data)
             resolve()
           } else {
             commit(types.SPEAKERS_FAIL)
@@ -115,6 +168,22 @@ const mutations = {
   [types.SPEAKERS_SUCCESS] (state, data) {
     state.checkoutStatus = null
     state.SPEAKERS = data.speakers
+  },
+  SPEAKERS_GET_SUCCESS (state, data) {
+    state.checkoutStatus = null
+    state.speakers = data.speakers
+  },
+  SPEAKERS_SAVE_SUCCESS (state, data) {
+    state.checkoutStatus = null
+    state.speakers = data.speakers
+  },
+  JUDGES_GET_SUCCESS (state, data) {
+    state.checkoutStatus = null
+    state.judges = data.judges
+  },
+  JUDGES_SAVE_SUCCESS (state, data) {
+    state.checkoutStatus = null
+    state.judges = data.judges
   }
 }
 

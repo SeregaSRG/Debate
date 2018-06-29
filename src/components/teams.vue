@@ -27,9 +27,11 @@ export default {
   name: 'teams',
   computed: {
     teams: function () {
-      console.log(this.$store.getters['speakers/getTeams'])
       return this.$store.getters['speakers/getTeams']
     }
+  },
+  created: function () {
+    console.log('created', this.$store.getters['speakers/getTeams'])
   }
 }
 </script>
@@ -45,14 +47,19 @@ export default {
         flex-direction: row;
         flex-wrap: wrap;
 
+        &:nth-child(even) {
+            background-color: #f5f5f5;
+        }
+
         .card {
-            width: 300px;
+            width: 240px;
             padding: 14px;
             border-radius: 6px;
-            margin: 0 40px 40px 0;
+            margin: 20px 20px 20px 20px;
             display: flex;
             flex-direction: column;
             justify-content: space-evenly;
+            background-color: white;
             input {
                 padding: 14px;
                 margin-bottom: 10px;
