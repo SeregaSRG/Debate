@@ -54,10 +54,10 @@ const getters = {
   },
   getTeamsF: state => {
     let result = {
-      'k': {},
-      'v': {},
-      'b': {},
-      'e': {}
+      'k': [],
+      'v': [],
+      'b': [],
+      'e': []
     }
     state.speakers.forEach(function (item, i, arr) {
       let league = ''
@@ -78,15 +78,17 @@ const getters = {
           league = 'e'
           break
       }
-      if (result[league][item.team] === undefined) {
-        result[league][item.team] = []
-        item['used'] = false
-        result[league][item.team].push(item)
-      } else {
-        item['used'] = false
-        result[league][item.team].push(item)
+      if (result[league].find(x => x.team === item.team) === undefined) {
+        result[league].push(
+          {
+            'team': item.team,
+            'used': false,
+            'club': item.club
+          }
+        )
       }
     })
+    console.log('getTeamsF', result)
     return result
   },
   getJudges: state => state.judges,
@@ -97,7 +99,6 @@ const getters = {
   }),
   getClubs: state => {
     let result = {}
-    console.log('state.speakers', state.speakers)
     state.speakers.forEach(function (item, i, arr) {
       if (result[item.club] === undefined) {
         result[item.club] = 0
@@ -134,7 +135,6 @@ const actions = {
   saveSpeakers ({ commit, state }, credentials) {
     return new Promise((resolve, reject) => {
       commit(types.SPEAKERS_REQUESTING)
-      console.log('saveSpeakers', credentials)
       api.$speakers.saveSpeakers(credentials)
         .then((response) => {
           if (response.data.status === 'done') {

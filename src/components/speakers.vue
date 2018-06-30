@@ -100,6 +100,7 @@ export default {
   },
   created: function () {
     this.getSpeakers()
+    console.log(this.$store.getters['speakers/getTeamsF'])
   }
 }
 </script>

@@ -14,7 +14,7 @@
                          v-for="(team, key) in table.teams"
                          :key="key"
                     >
-                        <h1>{{ team.name }}</h1>
+                        <h1>{{ team.team }}</h1>
                         <h5>{{ team.club }}</h5>
                         <p
                                 v-for="(command, key) in team.command"
@@ -32,7 +32,6 @@ export default {
   name: 'tab-table',
   props: ['tables'],
   created: function () {
-    console.log()
   }
 }
 </script>

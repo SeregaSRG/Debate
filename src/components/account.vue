@@ -4,7 +4,7 @@
             <router-link :to="'/admin'">УПРАВЛЕНИЕ</router-link>
         </div>
         <div class="account__button" v-if="isLogin && !(name==='Админ')">
-            <router-link :to="'/judging'">СУДЕЙСТВО</router-link>
+            <router-link :to="'/admin'">СУДЕЙСТВО</router-link>
         </div>
         <div class="account__button">
             <router-link :to="'/auth'" v-if="!isLogin">ВОЙТИ</router-link>

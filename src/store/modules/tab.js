@@ -41,7 +41,6 @@ const getters = {
   getTabByJudge: state => name => {
     const tab = state.tab
     let arr = []
-    console.log(tab)
     for (let league in tab) {
       for (let round in tab[league]) {
         for (let room in tab[league][round]) {
@@ -51,7 +50,6 @@ const getters = {
         }
       }
     }
-    console.log(arr)
     return arr
   }
 }
@@ -87,6 +85,7 @@ const mutations = {
   },
   [types.TAB_SUCCESS] (state, data) {
     state.checkoutStatus = null
+    // state.tab = JSON.parse(data.tab)
     // state.tab = JSON.parse(data.tab)
   },
   [types.TAB_FAIL] (state) {
