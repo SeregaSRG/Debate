@@ -2,15 +2,7 @@ import * as types from '../mutation-types'
 import api from '../../services/api'
 
 const state = {
-  speakers: [
-    {
-      name: 'Имя',
-      surname: 'Фамилия',
-      team: 'Команда',
-      club: 'Клуб',
-      league: 'Лига'
-    }
-  ],
+  speakers: [],
   judges: []
 }
 
@@ -60,7 +52,49 @@ const getters = {
     })
     return result
   },
+  getTeamsF: state => {
+    let result = {
+      'k': {},
+      'v': {},
+      'b': {},
+      'e': {}
+    }
+    state.speakers.forEach(function (item, i, arr) {
+      let league = ''
+      switch (item.league) {
+        case 'КП':
+          league = 'k'
+          break
+        case 'ВШФ':
+          league = 'v'
+          break
+        case 'БПФ':
+          league = 'b'
+          break
+        case 'EN':
+          league = 'e'
+          break
+        default:
+          league = 'e'
+          break
+      }
+      if (result[league][item.team] === undefined) {
+        result[league][item.team] = []
+        item['used'] = false
+        result[league][item.team].push(item)
+      } else {
+        item['used'] = false
+        result[league][item.team].push(item)
+      }
+    })
+    return result
+  },
   getJudges: state => state.judges,
+  getJudgesF: state => state.judges.map(judge => {
+    judge['used'] = false
+    judge['league'] = judge['league'].split(', ')
+    return judge
+  }),
   getClubs: state => {
     let result = {}
     console.log('state.speakers', state.speakers)

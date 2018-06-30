@@ -7,6 +7,7 @@ import Admin from '@/components/admin'
 import Speakers from '@/components/speakers'
 import Teams from '@/components/teams'
 import Judges from '@/components/judges'
+import Generator from '@/components/tabGenerator'
 
 import m from './middleware.js'
 
@@ -42,7 +43,12 @@ export default new Router({
           path: 'tabs',
           name: 'Tabs',
           beforeEnter: m.auth,
-          component: Speakers
+          component: Generator,
+          children: [
+            {
+              path: ':league/:round'
+            }
+          ]
         }
       ]
     },

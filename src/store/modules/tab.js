@@ -2,7 +2,36 @@ import * as types from '../mutation-types'
 import api from '../../services/api'
 
 const state = {
-  tab: null,
+  tab: {
+    'k': {
+      '1': [],
+      '2': [],
+      '3': [],
+      '4': [],
+      '5': []
+    },
+    'v': {
+      '1': [],
+      '2': [],
+      '3': [],
+      '4': [],
+      '5': []
+    },
+    'b': {
+      '1': [],
+      '2': [],
+      '3': [],
+      '4': [],
+      '5': []
+    },
+    'e': {
+      '1': [],
+      '2': [],
+      '3': [],
+      '4': [],
+      '5': []
+    }
+  },
   checkoutStatus: null
 }
 
@@ -58,7 +87,7 @@ const mutations = {
   },
   [types.TAB_SUCCESS] (state, data) {
     state.checkoutStatus = null
-    state.tab = JSON.parse(data.tab)
+    // state.tab = JSON.parse(data.tab)
   },
   [types.TAB_FAIL] (state) {
     state.checkoutStatus = null

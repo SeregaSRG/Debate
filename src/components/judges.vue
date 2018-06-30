@@ -74,6 +74,13 @@ export default {
       }
       this.judges.push(clone)
       this.saveJudges()
+      this.newJudge = {
+        name: '',
+        surname: '',
+        club: '',
+        league: '',
+        password: ''
+      }
     },
     deleteJudge: function (id) {
       this.judges.splice(id, 1)
