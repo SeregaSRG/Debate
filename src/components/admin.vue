@@ -1,6 +1,6 @@
 <template>
     <div class="admin__wrapper">
-        <div class="control__wrapper">
+        <div class="control__wrapper hidden-print">
             <div class="control__type">
                 <router-link to="/admin/speakers" class="control__button"><p>Спикеры</p></router-link>
                 <router-link to="/admin/teams" class="control__button"><p>Команды</p></router-link>

@@ -6,20 +6,16 @@
                  :key="key"
             >
                 <div class="meta">
-                    <h1>{{ table.meta.room }}</h1>
-                    <h1>{{ table.meta.judge }}</h1>
+                    <input class="h1" :value="'Рум №' + table.meta.room">
+                    <input class="h1 judge" v-model="table.meta.judge">
                 </div>
                 <div class="table__row">
                     <div class="table__cell"
                          v-for="(team, key) in table.teams"
                          :key="key"
                     >
-                        <h1>{{ team.team }}</h1>
-                        <h5>{{ team.club }}</h5>
-                        <p
-                                v-for="(command, key) in team.command"
-                                :key="key"
-                        >{{ command }}</p>
+                        <input class="h1" v-model="team.team">
+                        <input class="h2" v-model="team.club">
                     </div>
                 </div>
             </div>
@@ -44,5 +40,35 @@ export default {
         width: 98%;
         max-width: 400px;
         margin: 0 auto;
+
+        input {
+            all: unset;
+        }
+
+        .judge {
+            text-align: right;
+        }
+
+        .h1 {
+            width: 50%;
+            font-size: 22px;
+            font-family: 'Proxima Nova Semibold';
+            margin: 0;
+            padding: 0;
+        }
+
+        .table__cell {
+            .h1 {
+                width: 100%;
+            }
+
+            .h2 {
+                width: 100%;
+                font-size: 18px;
+                font-family: 'Proxima Nova Light';
+                margin: 0;
+                padding: 0;
+            }
+        }
     }
 </style>

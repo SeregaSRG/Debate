@@ -1,6 +1,6 @@
 <template>
     <div class="generator">
-        <div class="control__wrapper">
+        <div class="control__wrapper hidden-print">
             <div class="control__league">
                 <router-link :to="'/admin/tabs/k/' + round" class="control__button"><p>КП</p></router-link>
                 <router-link :to="'/admin/tabs/v/' + round" class="control__button"><p>ВШФ</p></router-link>
@@ -17,9 +17,13 @@
                 <div class="active-bubble"></div>
             </div>
         </div>
-        <div class="control__buttons">
+        <div class="control__buttons hidden-print ">
             <div class="oval-button" @click="createAllTab"><p>СГЕНЕРИРОВАТЬ</p></div>
-            <div class="oval-button"><p>СОХРАНИТЬ</p></div>
+            <div class="oval-button" @click="saveTab"><p>СОХРАНИТЬ</p></div>
+            <div class="oval-button">
+                <input type="checkbox" id="isSide" class="noselect" v-model="config.isSide">
+                <input type="checkbox" id="isClub" class="noselect" v-model="config.isClub">
+            </div>
         </div>
         <tab-table
                 :tables="tab[league][round]"
@@ -34,7 +38,11 @@ export default {
     return {
       tab: null,
       judges: null,
-      teams: null
+      teams: null,
+      config: {
+        isSide: true,
+        isClub: true
+      }
     }
   },
   components: {
@@ -46,23 +54,91 @@ export default {
     createAllTab: function () {
       this.judges = JSON.parse(JSON.stringify(this.$store.getters['speakers/getJudgesF']))
       this.teams = JSON.parse(JSON.stringify(this.$store.getters['speakers/getTeamsF']))
-      // ГЕНЕРАЦИЯ ТЭБА ДЛЯ КП
-      this.kCreate(this.round)
+      // ГЕНЕРАЦИЯ ТЭБА ДЛЯ ТЕКУЩЕЙ ВКЛАДКИ
+      this.create(this.league, this.round)
     },
-    kCreate: function (round) {
-      this.tab['k'][round] = []
-      let numberOfSpeakers = Object.keys(this.teams['k']).length
+    isSide (league, round, team, side) {
+      if (this.config.isSide) {
+        if (round === '1' || round === '2' || round === '5') {
+          return true
+        }
+        let countStatement = 0
+        let countNegation = 0
+        for (let i = round - 1; i > 0; i--) {
+          if (this.tab[league][i].find(x => x['teams'][0]['team'] === team.team) !== undefined) {
+            countStatement++
+          }
+          if (this.tab[league][i].find(x => x['teams'][1]['team'] === team.team) !== undefined) {
+            countNegation++
+          }
+        }
+        if (round === '3') {
+          if (side === 0) {
+            if (countStatement === countNegation) {
+              return true
+            }
+            return countNegation === 2
+          } else {
+            if (countStatement === countNegation) {
+              return true
+            }
+            return countStatement === 2
+          }
+        }
+        if (round === '4') {
+          if (side === 0) {
+            return countNegation === 2
+          } else {
+            return countStatement === 2
+          }
+        }
+        return true
+      } else {
+        return true
+      }
+    },
+    isPlayed (firstTeam, secondTeam, round) {
+    },
+    isConflict (judge, team) {
+      return judge['club'] === team['club']
+    },
+    isClub (firstTeam, secondTeam) {
+      if (this.config.isClub) {
+        return firstTeam['club'] === secondTeam['club']
+      } else {
+        return false
+      }
+    },
+    create: function (league, round) {
+      console.group()
+      this.tab[league][round] = []
+      let numberOfSpeakers = Object.keys(this.teams[league]).length
       let numberOfRooms = Math.ceil(numberOfSpeakers / 2)
-      console.log('Команд КП: ', numberOfSpeakers)
+      console.log('Команд ' + league + ': ', this.teams[league])
       console.log('Румов: ', numberOfRooms)
       // Перебор румов для заполнения
       let judges = this.judges.filter((item) => {
-        return item.league.indexOf('КП') !== -1
+        switch (league) {
+          case 'k':
+            return item.league.indexOf('КП') !== -1
+          case 'v':
+            return item.league.indexOf('ВШФ') !== -1
+          case 'b':
+            league = 'b'
+            break
+          case 'e':
+            league = 'e'
+            break
+          default:
+            league = 'e'
+            break
+        }
       })
       console.log('Судей: ', judges)
       if (judges.length < numberOfRooms) {
         console.error('no judges')
         alert('no judges')
+        console.groupEnd()
         return 'no judges'
       }
       for (let nowRoom = 0; nowRoom < numberOfRooms; nowRoom++) {
@@ -76,29 +152,51 @@ export default {
           iterations++
         } while (judge.used && iterations < 100)
         judges[judgeNumber]['used'] = true
-        console.log('iterations', iterations)
+        // console.log('iterations', iterations)
         // Выбор первой команды
         let firstTeam
         let firstTeamNumber
         iterations = 0
         do {
-          firstTeamNumber = Math.floor(Math.random() * this.teams['k'].length)
-          firstTeam = this.teams['k'][firstTeamNumber]
+          firstTeamNumber = Math.floor(Math.random() * numberOfSpeakers)
+          firstTeam = this.teams[league][firstTeamNumber]
           iterations++
-        } while (firstTeam.used && iterations < 100)
-        this.teams['k'][firstTeamNumber]['used'] = true
+        } while (
+          (
+            this.isConflict(judges[judgeNumber], firstTeam) ||
+            !this.isSide(league, round, firstTeam) ||
+            firstTeam.used
+          ) && iterations < 100)
+        this.teams[league][firstTeamNumber]['used'] = true
+        if (iterations > 99) {
+          console.error('firstTeam', iterations)
+        }
         // Выбор второй команды
         let secondTeam
         let secondTeamNumber
         iterations = 0
         do {
-          secondTeamNumber = Math.floor(Math.random() * this.teams['k'].length)
-          secondTeam = this.teams['k'][secondTeamNumber]
+          secondTeamNumber = Math.floor(Math.random() * numberOfSpeakers)
+          secondTeam = this.teams[league][secondTeamNumber]
           iterations++
-        } while (secondTeam.used && iterations < 100)
-        this.teams['k'][secondTeamNumber]['used'] = true
+        } while (
+          (
+            this.isConflict(judges[judgeNumber], secondTeam) ||
+            !this.isSide(league, round, secondTeam) ||
+            secondTeam.used ||
+            this.isClub(firstTeam, secondTeam)
+          ) && iterations < 100)
+        this.teams[league][secondTeamNumber]['used'] = true
+        if (iterations > 99) {
+          console.error(
+            'isConflict:', this.isConflict(judges[judgeNumber], secondTeam),
+            'isSide:', secondTeam.used,
+            'isUsed:', !this.isSide(league, round, secondTeam),
+            'isClub:', this.isClub(firstTeam, secondTeam)
+          )
+        }
         // ПУШ
-        this.tab['k'][round].push({
+        this.tab[league][round].push({
           meta: {
             room: nowRoom + 1,
             judge: judge.surname + ' ' + judge.name
@@ -109,6 +207,15 @@ export default {
           }
         })
       }
+      console.groupEnd()
+    },
+    saveTab () {
+      this.$store.dispatch('tab/saveTab', {
+        'tab': this.tab
+      })
+        .then(() => {
+          console.log('saved')
+        })
     }
   },
   computed: {
@@ -154,7 +261,7 @@ export default {
     @import '../main.scss';
 
     .control__buttons {
-        width: 320px;
+        width: 500px;
         height: 60px;
         margin: 0 auto;
         display: flex;
@@ -165,6 +272,18 @@ export default {
         .oval-button {
             width: 150px;
             height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: space-evenly;
+            flex-direction: row;
+            input {
+                height: 20px;
+                margin: 0;
+            }
+            label {
+                cursor: pointer;
+                margin: 0;
+            }
         }
     }
 

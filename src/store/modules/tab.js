@@ -75,6 +75,26 @@ const actions = {
           reject(data)
         })
     })
+  },
+  saveTab ({ commit, state }, credentials) {
+    JSON.stringify()
+    return new Promise((resolve, reject) => {
+      commit(types.TAB_REQUESTING)
+      api.$tab.saveTab(credentials)
+        .then((response) => {
+          if (response.data.status === 'done') {
+            commit('TAB_SAVE_SUCCESS', response.data.data)
+            resolve()
+          } else {
+            commit(types.TAB_FAIL)
+            reject(response.data.errorcode)
+          }
+        })
+        .catch((data) => {
+          commit(types.TAB_FAIL)
+          reject(data)
+        })
+    })
   }
 }
 
@@ -85,8 +105,13 @@ const mutations = {
   },
   [types.TAB_SUCCESS] (state, data) {
     state.checkoutStatus = null
+    state.tab = JSON.parse(data.tab)
     // state.tab = JSON.parse(data.tab)
-    // state.tab = JSON.parse(data.tab)
+  },
+  TAB_SAVE_SUCCESS (state, data) {
+    console.log('TAB_SAVE_SUCCESS', data.tab)
+    state.tab = JSON.parse(data.tab)
+    state.checkoutStatus = null
   },
   [types.TAB_FAIL] (state) {
     state.checkoutStatus = null
